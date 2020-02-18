@@ -1,17 +1,26 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:lesson
-    username: root
-    password: root
+    url: ${DATASOURCE_URL:jdbc:h2:mem:lesson_db}
+    username: ${DATASOURCE_USER:lesson_user}
+    password: ${DATASOURCE_PASSWORD:secret}
     driver-class-name: org.h2.Driver
   jpa:
+    hibernate:
+      ddl-auto: validate
     database-platform: org.hibernate.dialect.H2Dialect
     show-sql: true
+    database: h2
   h2:
     console:
       enabled: true
       path: /h2-console
-      settings:
-        trace: false
-        web-allow-others: false
+
+  flyway:
+    url: ${DATASOURCE_URL:jdbc:h2:mem:lesson_db}
+    password: ${DATASOURCE_PASSWORD:secret}
+    locations: classpath:db/migration
+    user: ${DATASOURCE_USER:lesson_user}
+
+
+
 
